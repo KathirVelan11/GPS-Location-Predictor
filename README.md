@@ -1,4 +1,4 @@
-# 🧭 Dementia GPS Tracker - AI-Powered Location Prediction
+# 🧭 Dementia Patient Location Tracking
 
 <div align="center">
 
