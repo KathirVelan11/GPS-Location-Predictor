@@ -32,21 +32,21 @@ pip install -r requirements.txt
 
 ## 🛠️ Steps to Run the Project
 1. Upload your .csv GPS file (must follow [DATA_FORMAT.md]). 
-2. Run Data Preprocessing.ipynb to clean and prepare the data.
-3. Open Model Training.ipynb to train and evaluate the models.
-4. Use New Prediction.ipynb to input a date and time and get the predicted location.
+2. Open and run `📄 Location prediction.ipynb` notebook.
+   - It will handle **data preprocessing**, **model training**, and **prediction** based on your input.
 
 ## 📂 Project Structure
-```
+
 This repository contains all core files needed for end-to-end location prediction using GPS data:
 
-| File / Folder              | Description                                                                 |
-|---------------------------|-----------------------------------------------------------------------------|
-| `📄 Data Preprocessing.ipynb` | Cleans and prepares raw GPS data, handles missing values, and extracts useful features (like time of day, weekend, etc.) |
-| `📄 Model Training.ipynb`      | Trains and evaluates machine learning models (Random Forest, Polynomial Regression) using the engineered features |
-| `📄 New Prediction.ipynb`         | Accepts user input (date & time), applies preprocessing, and uses trained model to predict patient location |
-| `📄 DATA_FORMAT.md`            | Defines the required format for the input GPS `.csv` file, including column order, valid formats, and sample data |
-```
+| File / Folder                     | Description                                                                 |
+|----------------------------------|-----------------------------------------------------------------------------|
+| `📄 Location prediction.ipynb`| All-in-one notebook that performs data preprocessing, model training, and future location prediction |
+| `📄 DATA_FORMAT.md`              | Defines the required format for the input GPS `.csv` file, including column order, valid formats, and sample data |
+| `📄 ARCHITECTURE.md`             | Contains system architecture diagram and component-level explanation |
+| `📄 ML_Models.md`                | Details machine learning models used, tuning strategies, evaluation metrics, and reasoning |
+| `📄 README.md`                   | Main project documentation with setup steps, usage guide, and future work suggestions |
+
 > 🔗 Tip: See [`DATA_FORMAT.md`](DATA_FORMAT.md) for details on how your input GPS data should be structured before running preprocessing.
 
 ## 🏗️ System Architecture
