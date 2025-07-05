@@ -34,7 +34,7 @@ pip install -r requirements.txt
 1. Upload your .csv GPS file (must follow [DATA_FORMAT.md]). 
 2. Run Data Preprocessing.ipynb to clean and prepare the data.
 3. Open Model Training.ipynb to train and evaluate the models.
-4. Use New Prediction.py to input a date and time and get the predicted location.
+4. Use New Prediction.ipynb to input a date and time and get the predicted location.
 
 ## 📂 Project Structure
 ```
@@ -44,7 +44,7 @@ This repository contains all core files needed for end-to-end location predictio
 |---------------------------|-----------------------------------------------------------------------------|
 | `📄 Data Preprocessing.ipynb` | Cleans and prepares raw GPS data, handles missing values, and extracts useful features (like time of day, weekend, etc.) |
 | `📄 Model Training.ipynb`      | Trains and evaluates machine learning models (Random Forest, Polynomial Regression) using the engineered features |
-| `📄 New Prediction.py`         | Accepts user input (date & time), applies preprocessing, and uses trained model to predict patient location |
+| `📄 New Prediction.ipynb`         | Accepts user input (date & time), applies preprocessing, and uses trained model to predict patient location |
 | `📄 DATA_FORMAT.md`            | Defines the required format for the input GPS `.csv` file, including column order, valid formats, and sample data |
 ```
 > 🔗 Tip: See [`DATA_FORMAT.md`](DATA_FORMAT.md) for details on how your input GPS data should be structured before running preprocessing.
