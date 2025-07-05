@@ -1,7 +1,7 @@
 # 🧭 Dementia GPS Tracker - AI-Powered Location Prediction
 
 <div align="center">
-  <img src="docs/images/project_banner.png" alt="Dementia GPS Tracker" width="800"/>
+  
   
   [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://python.org)
   [![Arduino](https://img.shields.io/badge/Arduino-Compatible-green)](https://arduino.cc)
