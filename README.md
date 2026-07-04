@@ -2,106 +2,105 @@
 
 <div align="center">
 
-  
   [![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://python.org)
   [![Arduino](https://img.shields.io/badge/Arduino-Compatible-green)](https://arduino.cc)
+  [![Best Model R²](https://img.shields.io/badge/Random%20Forest%20R²-0.99999-brightgreen)](#-results)
 </div>
+
+An end-to-end system that logs a dementia patient's GPS trail with an Arduino and
+**predicts their location from date & time** using machine learning — so caregivers
+can respond before a patient wanders off.
 
 ## 🎯 Problem Statement
 
-Dementia affects millions worldwide, with **60% of patients experiencing wandering behavior**. By combining IoT hardware with machine learning, this system predicts patient locations in advance, enabling faster caregiver response and potentially saving lives.
+Dementia affects millions worldwide, with **~60% of patients experiencing wandering behavior**. By combining IoT hardware with machine learning, this system predicts patient locations in advance, enabling faster caregiver response and potentially saving lives.
 
 ## 💡 Solution Overview
 
-Our system uses real-time GPS tracking and predictive analytics to:
-- 📍 Continuously monitor patient location
-- 🔮 Predict future movement patterns
+- 📍 Continuously log patient location (Arduino + GPS + SD card)
+- 🔮 Predict future coordinates from temporal features (date/time)
 - 🚨 Alert caregivers before patients get lost
 - 📊 Provide insights into movement behaviors
 
-## 🧪 How to Use
+## 📊 Results
+
+Trained on **4,791 real GPS readings** (features shape `(4791, 18)`, targets `(4791, 6)`).
+Three models were tuned and compared; **Random Forest** was selected as the best.
+
+| Model                 | Test R² Score | Notes                                  |
+|-----------------------|:-------------:|----------------------------------------|
+| 🌲 **Random Forest**  | **0.99999**   | ✅ Best model — near-perfect fit        |
+| 📈 Polynomial Regression | 0.9977     | Captures daily cyclical routines        |
+| ⚡ XGBoost (base)      | 0.333         | Baseline before extensive tuning        |
+
+### 🔮 Example Prediction
+
+Given a date & time, the notebook predicts the patient's coordinates:
+
+```
+Input   →  Date: 20/05/2024   Time: 15:51:00
+Output  →  Predicted Latitude : 9.5703399709
+           Predicted Longitude: 78.1067810017
+```
+
+> 📍 These coordinates fall in the Tamil Nadu region (~9.57°N, 78.10°E), matching the training area.
+
+## 🧪 Getting Started
 
 ```bash
-# 1. Clone the repository 
-git clone https://github.com/yourusername/GPS-Location-Predictor.git
+# 1. Clone the repository
+git clone https://github.com/KathirVelan11/GPS-Location-Predictor.git
 cd GPS-Location-Predictor
 
 # 2. Install required Python packages
 pip install -r requirements.txt
 ```
 
-## 🛠️ Steps to Run the Project
-1. Upload your .csv GPS file (must follow [DATA_FORMAT.md]). 
-2. Open and run `📄 Location prediction.ipynb` notebook.
-   - It will handle **data preprocessing**, **model training**, and **prediction** based on your input.
+### Steps to Run
+1. Prepare a `.csv` GPS file that follows [docs/DATA_FORMAT.md](docs/DATA_FORMAT.md).
+2. Open and run **`Location prediction.ipynb`** — it handles **preprocessing**, **model training**, and **prediction** in one place.
+3. At the final step, enter a date and time to get the predicted location.
 
 ## 📂 Project Structure
 
-This repository contains all core files needed for end-to-end location prediction using GPS data:
-
-| File / Folder                     | Description                                                                 |
-|----------------------------------|-----------------------------------------------------------------------------|
-| `📄 Location prediction.ipynb`| All-in-one notebook that performs data preprocessing, model training, and future location prediction |
-| `📄 DATA_FORMAT.md`              | Defines the required format for the input GPS `.csv` file, including column order, valid formats, and sample data |
-| `📄 ARCHITECTURE.md`             | Contains system architecture diagram and component-level explanation |
-| `📄 ML_Models.md`                | Details machine learning models used, tuning strategies, evaluation metrics, and reasoning |
-| `📄 README.md`                   | Main project documentation with setup steps, usage guide, and future work suggestions |
-| `📂 Hardware/GPS_data_logging.ino`   | Arduino code to collect GPS data and log it as a `.csv` file to the SD card |
+```
+GPS-Location-Predictor/
+├── Location prediction.ipynb    # All-in-one: preprocessing → training → prediction
+├── requirements.txt             # Python dependencies
+├── Hardware/
+│   └── GPS_data_logging.ino     # Arduino GPS → SD-card CSV logger
+├── docs/
+│   ├── DATA_FORMAT.md           # Required CSV format & sample data
+│   ├── ML_MODELS.md             # Models, tuning, metrics & rationale
+│   └── ARCHITECTURE.md          # System architecture diagram
+└── README.md
+```
 
 ## 📟 Arduino GPS Logger
 
-This hardware module collects real-time GPS coordinates and logs them into a `.csv` file using an Arduino and GPS setup. The logged file (`data.csv`) is later used for location prediction.
+The hardware module collects real-time GPS coordinates and logs them to a `.csv` file on an SD card, ready for the prediction pipeline.
 
-### 🔌 Components Used
-- 🛰️ **Neo 6M GPS Module** – for fetching real-time latitude and longitude
-- 💡 **Arduino Uno** – microcontroller to interface with GPS and SD modules
-- 💾 **SD Card (any storage size)** – for storing the location data
-- 📦 **SD Card Module** – interfaces the SD card with Arduino
-- 🔌 **Jumper Wires** – for circuit connections
-- 🔋 **Power Bank** – portable power supply for Arduino
+**Components:** 🛰️ Neo 6M GPS Module · 💡 Arduino Uno · 💾 SD Card + Module · 🔌 Jumper Wires · 🔋 Power Bank
 
-### 📁 File
-- `Hardware/GPS_data_logging.ino` – Arduino script that:
-  - Reads GPS data using SoftwareSerial
-  - Extracts latitude, longitude, and IST-adjusted date & time
-  - Writes each record into the SD card in `.csv` format (`data.csv`)
+`Hardware/GPS_data_logging.ino` reads GPS data over SoftwareSerial, extracts latitude, longitude and IST-adjusted date/time, and writes each record to `data.csv`.
 
-> ✅ The `.csv` file generated by this Arduino code already follows the structure defined in [`DATA_FORMAT.md`](DATA_FORMAT.md). You can directly upload it into the Python pipeline for prediction.
+> ✅ The generated `.csv` already follows [docs/DATA_FORMAT.md](docs/DATA_FORMAT.md) — upload it directly into the Python pipeline.
 
 ## 🏗️ System Architecture
 
-See full system explanation and diagram in [ARCHITECTURE.md](ARCHITECTURE.md).
+See the full diagram and explanation in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
 ## 🧠 Machine Learning Models
 
-See detailed explanation of the models used, their tuning strategies, evaluation metrics, and reasons for selection in [ML_Models.md](ML_Models.md).
+See detailed model descriptions, tuning strategies and evaluation metrics in [docs/ML_MODELS.md](docs/ML_MODELS.md).
 
 ## 🔮 Future Improvements
 
-- Add a real-time alert system using GSM module or mobile app. 
-- Deploy model on microcontroller to make it edge-capable (without laptop/Colab).
-- Improve prediction accuracy using deep learning or sequence models (LSTM).
-- Add interactive map visualization using `Folium` or `Mapbox` for path tracking.
+- Real-time alerts via GSM module or mobile app
+- Deploy on microcontroller for edge inference (no laptop/Colab)
+- Sequence models (LSTM) for higher accuracy
+- Interactive map visualization with `Folium` or `Mapbox`
 
-## 🤝 Want to Help?
+## 🤝 Contributing
+
 Fork the repo and send a pull request with any improvements!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
