@@ -11,6 +11,8 @@ Usage:
     python src/generate_sample_data.py --out data/sample_gps.csv --days 45
 """
 import argparse
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
@@ -64,6 +66,7 @@ def main():
     ap.add_argument("--seed", type=int, default=42)
     args = ap.parse_args()
     df = generate(args.days, args.seed)
+    Path(args.out).parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(args.out, index=False)
     print(f"Wrote {len(df)} rows to {args.out}")
 
