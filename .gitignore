@@ -1,0 +1,14 @@
+# Trained artefacts (regenerable via `python src/train.py`)
+models/
+examples/map.html
+
+# Sample data is regenerable via src/generate_sample_data.py
+data/sample_gps.csv
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+venv/
+.venv/
